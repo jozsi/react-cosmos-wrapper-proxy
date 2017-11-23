@@ -1,8 +1,17 @@
 {
   "name": "react-cosmos-wrapper-proxy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Easily wrap components using react-cosmos",
-  "main": "index.js",
+  "main": "lib/index.js",
   "author": "Józsi <git@jozsi.ro>",
-  "license": "MIT"
+  "repository": "jozsi/react-cosmos-wrapper-proxy",
+  "license": "MIT",
+  "scripts": {
+    "build": "NODE_ENV=production babel src -d lib",
+    "prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.0"
+  }
 }
