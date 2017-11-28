@@ -1,5 +1,5 @@
 # react-cosmos-wrapper-proxy
-Easily wrap components using react-cosmos
+Easily wrap components using [react-cosmos](https://github.com/react-cosmos/react-cosmos)
 
 ## Example (using Material-UI)
 ### Configuration
