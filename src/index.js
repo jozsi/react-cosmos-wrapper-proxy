@@ -12,9 +12,14 @@ export default ({
   ...nextProps,
 }) => {
   const nextProxyEl = <NextProxy {...nextProps} nextProxy={next()} />;
+  const fixtureProps = nextProps.fixture[fixtureKey];
+  const fixtureEnabled = !!fixtureProps;
 
-  return nextProps.fixture[fixtureKey] ? (
-    <Component {...props}>
+  return fixtureEnabled ? (
+    <Component
+      {...props}
+      {...fixtureProps}
+    >
       {nextProxyEl}
     </Component>
   ) : nextProxyEl;
