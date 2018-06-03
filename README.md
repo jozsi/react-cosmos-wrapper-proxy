@@ -1,55 +1,44 @@
 # react-cosmos-wrapper-proxy
+
 Easily wrap components using [react-cosmos](https://github.com/react-cosmos/react-cosmos)
 
 ## Example (using Material-UI)
-### Configuration
+
+### Proxy configuration
+
 ```js
 // cosmos.proxies.js
-import createWrapperProxy from 'react-cosmos-wrapper-proxy';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import createWrapperProxy from "react-cosmos-wrapper-proxy";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 const muiProxy = createWrapperProxy({
   // Required
   component: MuiThemeProvider, // The wrapper component
-  fixtureKey: 'mui', // Used for toggling (or passing props)
+  fixtureKey: "mui", // Key
 
   // Optional
   // Props to pass to the wrapper component
+  // Note: can be passed from the fixture as well
   props: {
-    muiTheme: {/* ... */},
-    someOtherProp: 'hello',
-  },
+    muiTheme: {
+      /* ... */
+    },
+    someOtherProp: "hello"
+  }
 });
 
-export default [
-  muiProxy,
-];
+export default [muiProxy];
 ```
 
-### Activation
+### Fixture configuration
+
 ```js
 // __fixtures__/example.js
 export default {
   component: MyComponent,
-
-  // Option 1
-  // Setting it to `true` will enable the proxy and wrap your component
-  mui: true,
-
-  // Option 2
-  // Pass in an object of props
-  // This will be merged into the ones defined in `createWrapperProxy`
-  mui: { //
-    muiTheme: {/* ... */}, // a. will override previously defined `muiTheme` prop
-    newProp: 'aloha', // b. will be added
-  },
-
-  // Option 3
-  // Omitting the `fixtureKey` (`mui` in our case) will skip this proxy
-}
+  // Pass an object of props or `true` to enable the proxy
+  mui: true
+};
 ```
 
-## TODO
-- [ ] Tests
-
-*Contributions are more than welcome! :beers:*
+_Contributions are more than welcome! :beers:_
