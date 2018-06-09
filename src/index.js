@@ -9,8 +9,8 @@ export default ({ component: Component, props, fixtureKey, hoc }) =>
     const fixtureEnabled = !!fixtureProps;
     const NextComponent =
       fixtureEnabled && hoc
-        ? hoc[Symbol.iterator]
-          ? Component(...hoc)(NextProxy)
+        ? fixtureProps[Symbol.iterator]
+          ? Component(...fixtureProps)(NextProxy)
           : Component(NextProxy)
         : NextProxy;
     const nextProxyEl = <NextComponent {...nextProps} nextProxy={next()} />;

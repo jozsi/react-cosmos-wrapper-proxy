@@ -125,13 +125,12 @@ describe("wrapped", () => {
 
 describe("wrapped with parameters", () => {
   const fixture = {
-    wrapMe: true
+    wrapMe: ["hello", "world"]
   };
   beforeAll(() => {
     jest.clearAllMocks();
     renderProxy(fixture, {
-      component: DoubleHOComponent,
-      hoc: ["hello", "world"]
+      component: DoubleHOComponent
     });
   });
 

@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-wrapper-proxy",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Easily wrap components using react-cosmos",
   "main": "lib/index.js",
   "author": "Józsi <git@jozsi.ro>",
