@@ -1,21 +1,46 @@
 import React from "react";
 
+const HOCPropsProxy = props => {
+  const {
+    nextProxy,
+    fixture,
+    onComponentRef,
+    onFixtureUpdate,
+    ...rest
+  } = props;
+  const { value: NextProxy, next } = nextProxy;
+  fixture.props = {
+    ...fixture.props,
+    ...rest
+  };
+
+  return (
+    <NextProxy
+      fixture={fixture}
+      onComponentRef={onComponentRef}
+      onFixtureUpdate={onFixtureUpdate}
+      nextProxy={next()}
+    />
+  );
+};
+
 export default ({ component: Component, props, fixtureKey, hoc }) =>
-  function WrapperProxy({
-    nextProxy: { value: NextProxy, next },
-    ...nextProps
-  }) {
+  function WrapperProxy({ nextProxy, ...nextProps }) {
     const fixtureProps = nextProps.fixture[fixtureKey];
     const fixtureEnabled = !!fixtureProps;
-    const NextComponent =
-      fixtureEnabled && hoc
-        ? fixtureProps[Symbol.iterator]
-          ? Component(...fixtureProps)(NextProxy)
-          : Component(NextProxy)
-        : NextProxy;
-    const nextProxyEl = <NextComponent {...nextProps} nextProxy={next()} />;
 
-    return fixtureEnabled && !hoc ? (
+    if (fixtureEnabled && hoc) {
+      const HOComponent = fixtureProps[Symbol.iterator]
+        ? Component(...fixtureProps)(HOCPropsProxy)
+        : Component(HOCPropsProxy);
+
+      return <HOComponent {...nextProps} nextProxy={nextProxy} />;
+    }
+
+    const { value: NextProxy, next } = nextProxy;
+    const nextProxyEl = <NextProxy {...nextProps} nextProxy={next()} />;
+
+    return fixtureEnabled ? (
       <Component {...props} {...fixtureProps}>
         {nextProxyEl}
       </Component>

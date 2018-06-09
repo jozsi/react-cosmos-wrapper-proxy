@@ -11,13 +11,7 @@ const NextProxy = props => {
   return <P {...props} nextProxy={next()} />;
 };
 
-const LastProxy = ({
-  fixture: { component: C, props },
-  onComponentRef,
-  onFixtureUpdate,
-  nextProxy,
-  ...rest
-}) => <C {...rest} {...props} />;
+const LastProxy = ({ fixture: { component: C, props } }) => <C {...props} />;
 
 const HOComponent = WrappedComponent =>
   function WrapperComponent(props) {
@@ -112,6 +106,9 @@ describe("wrapped", () => {
     renderProxy(fixture);
   });
 
+  fixture.props = {
+    fromHoc: true
+  };
   commonTests(fixture);
 
   it("should wrap", () => {
@@ -134,6 +131,11 @@ describe("wrapped with parameters", () => {
     });
   });
 
+  fixture.props = {
+    fromHocTwo: true,
+    firstPassedProp: "hello",
+    secondPassedProp: "world"
+  };
   commonTests(fixture);
 
   it("should wrap", () => {
