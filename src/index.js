@@ -10,8 +10,8 @@ const HOCPropsProxy = props => {
   } = props;
   const { value: NextProxy, next } = nextProxy;
   fixture.props = {
-    ...fixture.props,
-    ...rest
+    ...rest,
+    ...fixture.props
   };
 
   return (
