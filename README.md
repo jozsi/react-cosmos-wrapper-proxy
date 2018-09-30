@@ -13,7 +13,8 @@ Supports both [Wrapper Components](#wrapper) and [HOCs (Higher Order Components)
 ```js
 // cosmos.proxies.js
 import createWrapperProxy from "react-cosmos-wrapper-proxy";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import purple from '@material-ui/core/colors/purple'
 
 const muiProxy = createWrapperProxy({
   // Required
@@ -24,9 +25,11 @@ const muiProxy = createWrapperProxy({
   // Props to pass to the wrapper component
   // Note: can be passed from the fixture as well
   props: {
-    muiTheme: {
-      /* ... */
-    },
+    theme: createMuiTheme({
+      palette: {
+        primary: purple
+      }
+    }),
     someOtherProp: "hello"
   }
 });
