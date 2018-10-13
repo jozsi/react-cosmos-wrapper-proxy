@@ -24,10 +24,15 @@ const HOCPropsProxy = props => {
   );
 };
 
-export default ({ component: Component, props, fixtureKey, hoc }) =>
-  function WrapperProxy({ nextProxy, ...nextProps }) {
+export default ({
+  component: Component,
+  props,
+  fixtureKey,
+  hoc,
+  defaultEnabled = false
+}) => function WrapperProxy({ nextProxy, ...nextProps }) {
     const fixtureProps = nextProps.fixture[fixtureKey];
-    const fixtureEnabled = !!fixtureProps;
+    const fixtureEnabled = defaultEnabled || !!fixtureProps;
 
     if (fixtureEnabled && hoc) {
       const HOComponent = fixtureProps[Symbol.iterator]
