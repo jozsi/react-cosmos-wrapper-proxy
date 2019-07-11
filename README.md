@@ -12,26 +12,27 @@ Supports both [Wrapper Components](#wrapper) and [HOCs (Higher Order Components)
 
 ```js
 // cosmos.proxies.js
-import createWrapperProxy from "react-cosmos-wrapper-proxy";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import purple from '@material-ui/core/colors/purple'
+import createWrapperProxy from 'react-cosmos-wrapper-proxy';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
 
 const muiProxy = createWrapperProxy({
   // Required
   component: MuiThemeProvider, // The wrapper component
-  fixtureKey: "mui", // Key
+  fixtureKey: 'mui', // Key
 
   // Optional
+  defaultEnabled: true, // enable by default in every fixture
   // Props to pass to the wrapper component
   // Note: can be passed from the fixture as well
   props: {
     theme: createMuiTheme({
       palette: {
-        primary: purple
-      }
+        primary: purple,
+      },
     }),
-    someOtherProp: "hello"
-  }
+    someOtherProp: 'hello',
+  },
 });
 
 export default [muiProxy];
@@ -42,7 +43,9 @@ export default [muiProxy];
 export default {
   component: MyComponent,
   // Pass an object of props or `true` to enable the proxy
-  mui: true
+  mui: true,
+  // Or if `defaultEnabled` is set, selectively disable it
+  mui: false,
 };
 ```
 
@@ -52,14 +55,14 @@ export default {
 
 ```js
 // cosmos.proxies.js
-import createWrapperProxy from "react-cosmos-wrapper-proxy";
-import { reduxForm } from "redux-form";
+import createWrapperProxy from 'react-cosmos-wrapper-proxy';
+import { reduxForm } from 'redux-form';
 
 const reduxFormProxy = createWrapperProxy({
   // Required
   component: reduxForm, // The wrapper function
   hoc: true, // Differentiate it from a simple wrapper
-  fixtureKey: "rf" // Key
+  fixtureKey: 'rf', // Key
 });
 
 export default [reduxFormProxy];
@@ -73,12 +76,12 @@ export default {
   // Then pass an array of arguments
   rf: [
     {
-      form: "formName"
-    }
-  ]
+      form: 'formName',
+    },
+  ],
   // If the HOC is simply myHoc(Component)
   // Then just pass true
-  // rf: true
+  rf: true,
 };
 ```
 

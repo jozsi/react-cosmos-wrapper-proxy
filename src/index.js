@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const HOCPropsProxy = props => {
   const {
@@ -11,7 +11,7 @@ const HOCPropsProxy = props => {
   const { value: NextProxy, next } = nextProxy;
   fixture.props = {
     ...rest,
-    ...fixture.props
+    ...fixture.props,
   };
 
   return (
@@ -29,10 +29,12 @@ export default ({
   props,
   fixtureKey,
   hoc,
-  defaultEnabled = false
-}) => function WrapperProxy({ nextProxy, ...nextProps }) {
+  defaultEnabled,
+}) =>
+  function WrapperProxy({ nextProxy, ...nextProps }) {
     const fixtureProps = nextProps.fixture[fixtureKey];
-    const fixtureEnabled = defaultEnabled || !!fixtureProps;
+    const fixtureEnabled =
+      fixtureProps !== undefined ? fixtureProps : defaultEnabled;
 
     if (fixtureEnabled && hoc) {
       const HOComponent = fixtureProps[Symbol.iterator]

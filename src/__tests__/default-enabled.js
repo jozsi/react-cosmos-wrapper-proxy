@@ -1,7 +1,7 @@
-import React from "react";
-import { mount } from "enzyme";
-import createWrapperProxy from "../";
-import { createLinkedList } from "react-cosmos-shared";
+import React from 'react';
+import { mount } from 'enzyme';
+import createWrapperProxy from '../';
+import createLinkedList from '@skidding/linked-list';
 
 const WrapperComponent = ({ children }) => <div>{children}</div>;
 const Component = () => <span>__COMPONENT_MOCK__</span>;
@@ -17,22 +17,22 @@ const renderProxy = proxyOptions => fixtureOptions => {
 
   const WrapperProxy = createWrapperProxy({
     component: WrapperComponent,
-    ...proxyOptions
-  })
+    ...proxyOptions,
+  });
 
   return mount(
     <WrapperProxy
-      nextProxy={createLinkedList([ NextProxy, LastProxy ])}
+      nextProxy={createLinkedList([NextProxy, LastProxy])}
       fixture={fixtureOptions}
       onComponentRef={jest.fn()}
       onFixtureUpdate={jest.fn()}
-    />
+    />,
   );
 };
 
-describe("defaultEnabled", () => {
-  it("Should wrap a component when `defaultEnabled` is true", () => {
-    const proxyOptions = { fixtureKey: "wrapper", defaultEnabled: true };
+describe('defaultEnabled', () => {
+  it('Should wrap a component when `defaultEnabled` is true', () => {
+    const proxyOptions = { fixtureKey: 'wrapper', defaultEnabled: true };
 
     const fixtureOptions = { component: Component };
 
@@ -41,17 +41,32 @@ describe("defaultEnabled", () => {
     expect(wrapper.find(WrapperComponent)).toHaveLength(1);
   });
 
-  it("Should not wrap a component when `defaultEnabled` is falsey", () => {
+  it('Should not wrap a component when `defaultEnabled` is falsey', () => {
     expect(
-      renderProxy({ fixtureKey: "wrapper" })({ component: Component }).find(WrapperComponent)
+      renderProxy({ fixtureKey: 'wrapper' })({ component: Component }).find(
+        WrapperComponent,
+      ),
     ).toHaveLength(0);
 
     expect(
-      renderProxy({ fixtureKey: "wrapper", defaultEnabled: null })({ component: Component }).find(WrapperComponent)
+      renderProxy({ fixtureKey: 'wrapper', defaultEnabled: null })({
+        component: Component,
+      }).find(WrapperComponent),
     ).toHaveLength(0);
 
     expect(
-      renderProxy({ fixtureKey: "wrapper", defaultEnabled: undefined })({ component: Component }).find(WrapperComponent)
+      renderProxy({ fixtureKey: 'wrapper', defaultEnabled: undefined })({
+        component: Component,
+      }).find(WrapperComponent),
+    ).toHaveLength(0);
+  });
+
+  it('Should not wrap a component when `defaultEnabled` is enabled but overridden in fixture', () => {
+    expect(
+      renderProxy({ fixtureKey: 'wrapper', defaultEnabled: true })({
+        component: Component,
+        wrapper: false,
+      }).find(WrapperComponent),
     ).toHaveLength(0);
   });
 });
